@@ -79,6 +79,56 @@ describe('array literals', () => {
 
 describe('tuples', () => {
 
+    it('type aliases', () => {
+        type Artist = string | number;
+        const name: Artist = 'Elvis';
+        const age: Artist = 100;
+    });
+
+    it('basic example', () => {
+        // typed array
+        const stuff: Array<number | string> = [];
+        stuff[0] = 32;
+        stuff[1] = 'Dog';
+        stuff[2] = 99;
+        // stuff[3] = []
+
+        type Artist = [string, string, string, number];
+        const artist: Artist = ['Warren', 'Ellis', 'Musician', 58];
+        const nonInferrableTypes: [boolean, string] = [true, 'thingy'];
+
+        // const firstName = artist[0];
+        // const lastName = artist[1];
+        // const age = artist[3];
+
+        const [firstName, lastName, , age] = artist;
+
+        expect(firstName).toBe('Warren');
+        expect(lastName).toBe('Ellis');
+        expect(age).toBe(58);
+
+    });
+
+    it('type aliases', () => {
+        type ThingWithLettersAndStuff = string | number;
+
+        let userName: ThingWithLettersAndStuff;
+
+        userName = 'Bob';
+        userName = 92;
+
+        type MathOp = (a: number, b: number) => number;
+
+        const add: MathOp = (a, b) => a + b;
+        const subtract: MathOp = (a, b) => a - b;
+
+        function doMath(x: number, y: number, f: MathOp): number {
+            return f(x + x, y + y);
+        }
+
+        expect(doMath(2, 2, add)).toBe(8);
+    });
+
     it('the problem and solution using OOP', () => {
 
         interface FormattedNameResponse { formattedName: string, numberOfLetters: number };
@@ -123,4 +173,130 @@ describe('tuples', () => {
         expect(tail).toEqual([2, 3, 4, 5, 6, 7, 8, 9]);
     });
 
+});
+
+describe('object literls and interfaces', () => {
+
+    it('an anonymous object type is an interface', () => {
+        // use an interface because it can be reused
+        interface Movie {
+            title: string;
+            director: string;
+            yearReleased: number;
+        };
+
+        const lotr: Movie = {
+            title: 'Lord of the Rings',
+            director: 'Peter Jackson',
+            yearReleased: 2001
+        };
+
+        function attendMovie(theMovie: Movie) {
+            // do domething
+        }
+    });
+
+    // Jeff said this is super important and life changing
+    it('duck typing (structural typing)', () => {
+        interface Messageable { message: string }
+        function logIt(thingy: Messageable) {
+            console.log(thingy.message)
+        }
+
+        // logit('tacos');
+        const phoneCall = {
+            from: 'sean',
+            message: 'practice tonight?'
+        }
+
+        logIt(phoneCall);
+        logIt({ message: 'Time for lunch' });
+    });
+
+    it('making extensible interfaces', () => {
+        interface Role { role: string; actor: string }
+        interface Dictionary<T> {
+            [key: string]: T
+        }
+        interface Movie {
+            title: string;
+            director: string;
+            yearReleased: number;
+            cast: Dictionary<Role>
+        };
+        const thor: Movie = {
+            title: 'Thor Ragnorak',
+            director: 'Taika Waititi',
+            yearReleased: 2017,
+            cast: {
+                thor: { role: 'Thor', actor: 'Chris Hemsworth' },
+                odin: { role: 'Odin', actor: 'Anthony Hopkins' },
+                'Loki the Brother': { role: 'Loki', actor: 'Tom Hiddelston' }
+            }
+
+        }
+
+        expect(thor.cast.thor.actor).toBe('Chris Hemsworth');
+        expect(thor.cast['Loki the Brother'].actor).toBe('Tom Hiddelston');
+
+        interface Person {
+            firstName: string;
+            lastName: string;
+            age?: number,
+            [key: string]: any
+        }
+
+        const joe: Person = {
+            firstName: 'Joseph',
+            lastName: 'Schmidt',
+            age: 56
+        }
+
+        const sue: Person = {
+            firstName: 'Susan',
+            lastName: 'Schneider'
+        }
+        const sean: Person = {
+            firstName: 'Sean',
+            lastName: 'Carlin',
+            age: 62,
+            occupation: 'Musician',
+            eyeColor: 'blue'
+        }
+
+        function doIt(p: Person) {
+            if (p.age !== undefined) {
+
+            }
+        }
+    });
+});
+
+describe('truth table', () => {
+
+    it('truth table', () => {
+        expect('').toBeFalsy();
+        expect(null).toBeFalsy();
+        expect(0).toBeFalsy();
+        expect(NaN).toBeFalsy();
+
+        expect(' ').toBeTruthy();
+        expect(-1).toBeTruthy();
+        expect({}).toBeTruthy();
+        expect([]).toBeTruthy();
+    });
+});
+
+describe('enums and string unions', () => {
+
+    it('has enums but they are a bit heavy', () => {
+        enum SeatType { Window, Aisle, Middle };
+
+        const mySeat: SeatType = SeatType.Window;
+    });
+
+    it('has union types for strings', () => {
+        type SeatType = 'Aisle' | 'Window' | 'Middle';
+        const mySeat: SeatType = 'Middle';
+    });
 });
