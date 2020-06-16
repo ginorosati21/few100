@@ -300,3 +300,25 @@ describe('enums and string unions', () => {
         const mySeat: SeatType = 'Middle';
     });
 });
+
+describe('spread operator', () => {
+
+    it('as used on arrays', () => {
+        const numbers = [2, 3, 4, 5, 6];
+        const newNumbers = [1, ...numbers, 7];
+
+        expect(newNumbers).toEqual([1, 2, 3, 4, 5, 6, 7]);
+        expect(numbers).toEqual([2, 3, 4, 5, 6]);
+    });
+
+    it('used on objects', () => {
+        const movie = {
+            title: 'Jaws',
+            director: 'Spielberg',
+            yearReleased: 1981
+        };
+
+        const newMovie = { ...movie, yearReleased: 1977 };
+        const another = { ...movie, lead: 'Roy Scheider' };
+    });
+});
