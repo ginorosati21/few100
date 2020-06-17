@@ -4,15 +4,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Front End Web 100</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+          crossorigin="anonymous">
 </head>
 
 <body>
-    <header>
-        <h1>Front End Web 100 Starter Virtual!</h1>
-        <h2>Progressive ITU</h2>
-    </header>
-    <main>
+    <div class="container-fluid">
+        <header class="jumbotron">
+            <h1>Tip Calculator</h1>
+            <p class="subheading">Calculate a tip - Don't be a cheapo</p>
+        </header>
+    </div>
 
+    <main class="container">
+        <section>
+            <header>
+                <h2>Calculator</h2>
+            </header>
+            <div class="form-group">
+                <label for="amount">Amount</label>
+                <input id="txtAmount"
+                       type="number"
+                       name="amount"
+                       class="form-control">
+                <button id="btnCalculate"
+                        class="btn btn-primary">Calculate</button>
+            </div>
+            <div class="btn-group"
+                 role="group"
+                 aria-label="Basic example">
+                <button type="button"
+                        class="btn btn-secondary">10%</button>
+                <button type="button"
+                        class="btn btn-secondary">15%</button>
+                <button type="button"
+                        class="btn btn-secondary"
+                        disabled>20%</button>
+                <button type="button"
+                        class="btn btn-secondary">25%</button>
+            </div>
+
+            <ul class="list-group">
+                <li class="list-group-item">Bill Amount: $<span id="spnBillAmount">0.00</span></li>
+                <li class="list-group-item">Tip Percentage: <span id="spnTipPercentage">0.00</span></li>
+                <li class="list-group-item">Tip Amount: $<span id="spnTipAmount">0.00</span></li>
+                <li class="list-group-item">Total to Be Paid: $<span id="spnTotal">0.00</span></li>
+            </ul>
+        </section>
     </main>
 </body>
 

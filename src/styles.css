@@ -1,3 +1,12 @@
 h1 {
-    color:red;
+    color:rebeccapurple;
+}
+
+.subheading { 
+    color: gray;
+    font-size: 1.5em;
+}
+
+#btnCalculate{
+    padding: 1%;
 }
